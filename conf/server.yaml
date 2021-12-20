@@ -1,5 +1,7 @@
-db:
-  url: "http://192.144.167.243:8086"
-  org: "jossy"
-  bucket: "test"
-  token: "f46BqkFbgCQbXVt5H4p1f-hqp8-v274KMx8ThLaoUB5nb2dmF7Y-Lmc-2EF2tqfTmZsgPUvksQJ1qtOgncS2bw=="
+Server:
+  Address: "0.0.0.0:9110"
+DB:
+  Url: "http://192.144.167.243:8086"
+  Org: "jossy"
+  Bucket: "test"
+  Token: "f46BqkFbgCQbXVt5H4p1f-hqp8-v274KMx8ThLaoUB5nb2dmF7Y-Lmc-2EF2tqfTmZsgPUvksQJ1qtOgncS2bw=="
