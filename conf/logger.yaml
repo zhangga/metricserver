@@ -1,0 +1,12 @@
+LogLevel: DEBUG #默认日志记录级别
+StacktraceLevel: PANIC #记录堆栈的级别
+ProjectName: metricserver #项目名称
+CallerSkip: 2 #CallerSkip次数
+JsonFormat: false #输出json格式
+ConsoleOut: true #是否输出到console
+FileOut:
+  Enable: true #是否将日志输出到文件
+  Path: "./logs/" #日志保存路径
+  Name: metric #日志保存的名称，不写随机生成
+  RotationTime: 24 #日志切割时间间隔(小时)
+  RotationCount: 7 #文件最大保存份数

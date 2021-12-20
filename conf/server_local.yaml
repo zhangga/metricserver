@@ -1,0 +1,5 @@
+db:
+  url: "http://localhost:8086"
+  org: "test"
+  bucket: "test"
+  token: "test"

@@ -1,0 +1,5 @@
+db:
+  url: "http://192.144.167.243:8086"
+  org: "jossy"
+  bucket: "test"
+  token: "f46BqkFbgCQbXVt5H4p1f-hqp8-v274KMx8ThLaoUB5nb2dmF7Y-Lmc-2EF2tqfTmZsgPUvksQJ1qtOgncS2bw=="
