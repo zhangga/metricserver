@@ -9,7 +9,7 @@ cat script/bootstrap.sh | sed 's/{{RUN_NAME}}/'${RUN_NAME}'/g' > output/bootstra
 chmod +x output/bootstrap.sh
 
 if [ "${IS_TEST_ENV}" != "1" ]; then
-  go build -o output/bin/${RUN_NAME}
+  go build -ldflags "-s -w" -o output/bin/${RUN_NAME}
 else
   go test -c -covermode=set -o output/bin/${RUN_NAME} -coverpkg=./...
 fi

@@ -12,3 +12,6 @@ Metric Server
 [Create a token](https://docs.influxdata.com/influxdb/v2.1/security/tokens/create-token/)
 
 启动UDP端口接收数据，每30s处理后将数据存储在influxDB中。
+
+### dockerfile文档
+https://juejin.cn/post/6844904174396637197

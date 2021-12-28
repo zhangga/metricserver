@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-CUR_DIR=$(cd $(dirname $0); pwd)
+cd `dirname $0`
+CUR_DIR=`pwd`
 
 exec "${CUR_DIR}/bin/{{RUN_NAME}}"
