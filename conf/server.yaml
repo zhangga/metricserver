@@ -1,5 +1,7 @@
 Server:
   Address: "0.0.0.0:9110"
+  Interval: 5 #处理数据的时间间隔,秒
+  RecvSize: 10000
 DB:
   Url: "http://192.144.167.243:8086"
   Org: "jossy"

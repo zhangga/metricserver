@@ -29,6 +29,8 @@ type Configure struct {
 // ServerConfig 服务相关配置
 type ServerConfig struct {
 	Address string `yaml:"Address"` // eg: ":port", "ip:port"
+	Interval int32 `yaml:"Interval"`
+	RecvSize int32 `yaml:"RecvSize"`
 }
 
 // DBConfig InfluxDB相关配置, 见配置文件conf/server.yaml

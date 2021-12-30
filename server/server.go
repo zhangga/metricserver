@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 )
 
 const (
@@ -14,12 +15,16 @@ const (
 )
 
 type Server struct {
-	config	*config.Configure
+	// 服务器配置
+	config			*config.Configure
 
+	// UDP连接
 	udpConn			*net.UDPConn
+	// influx client
 	influxClient	*InfluxClient
 
-	recvQueue []*MetricData
+	// 接收队列
+	recvQueue		*RingQueue
 	metrics	map[string]*MetricData
 
 	die     chan struct{} // notify the server has closed
@@ -30,7 +35,7 @@ func NewServer(config *config.Configure) *Server {
 	srv := &Server{
 		config: config,
 		influxClient: newInfluxClient(config),
-		recvQueue: make([]*MetricData, 1000),
+		recvQueue: newRingQueue(config.ServerConfig.RecvSize),
 		metrics: make(map[string]*MetricData, 1000),
 		die:    make(chan struct{}, 1),
 	}
@@ -49,6 +54,7 @@ func (s *Server) Start() {
 	logs.Infof("server start listened addr: %v", udpConn.LocalAddr().String())
 	s.udpConn = udpConn
 	go s.udpMonitor()
+	go s.workLoop()
 	select {
 	case <-s.die:
 		logs.Error("server stop!!!")
@@ -74,24 +80,35 @@ func (s *Server) udpMonitor() {
 
 func (s *Server) onUdpRead(data []byte, from net.Addr) {
 	body := string(data)
-	logs.Debugf("[onUdpRead] from=%v, data=%v", from.String(), body)
+	//logs.Debugf("[onUdpRead] from=%v, data=%v", from.String(), body)
 	firstIndex := strings.Index(body, "$")
+	secondIndex := strings.Index(body[firstIndex+1:], "$") + firstIndex + 1
 	lastIndex := strings.LastIndex(body, "$")
-	name := body[:firstIndex]
+	mtype, err := strconv.Atoi(body[:firstIndex])
+	name := body[firstIndex+1:secondIndex]
 	value, err := strconv.ParseFloat(body[lastIndex+1:], 64)
 	if err != nil {
 		logs.Errorf("[onUdpRead] parse float64 value=%v, err: %v", body[lastIndex+1:], err)
 		value = 0
 	}
 	tags := "{}"
-	if (firstIndex < lastIndex) {
-		tags = body[firstIndex+1:lastIndex]
+	if (secondIndex < lastIndex) {
+		tags = body[secondIndex+1:lastIndex]
 	}
 	metric := &MetricData{
+		Type: mtype,
 		Name: name,
 		Tags: tags,
 		Value: value,
+		Time: time.Now().Unix(),
 	}
-
 	s.influxClient.WritePoint(metric)
+	//s.recvQueue.offer(metric)
+}
+
+func (s *Server) workLoop() {
+	for {
+		metricData := s.recvQueue.poll()
+		s.influxClient.WritePoint(metricData)
+	}
 }
