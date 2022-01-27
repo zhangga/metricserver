@@ -51,6 +51,17 @@ Metrics提供一套完整的监控服务解决方案，它是基于时序性数�
    [Create a token](https://docs.influxdata.com/influxdb/v2.1/security/tokens/create-token/)
 
 ## Dockerfile文档
-扩展部分，想修改dockerfile的可以参考下这个文档：
-
+扩展部分，想修改dockerfile的可以参考下这个文档：  
 https://juejin.cn/post/6844904174396637197
+
+# 🔑 JetBrains OS licenses
+
+`metricserver` had been being developed with `IDEA` IDE under the **free JetBrains Open Source license(s)** granted by JetBrains s.r.o., hence I would like to express my thanks here.
+
+[![img](https://raw.githubusercontent.com/panjf2000/illustrations/master/jetbrains/jetbrains-variant-4.png)](https://www.jetbrains.com/?from=zhangga)
+
+
+## TODO
+
+1. ~~使用sonic json解析~~。
+2. 完善多种数据聚合处理器。
